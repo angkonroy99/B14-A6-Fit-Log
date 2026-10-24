@@ -1,69 +1,118 @@
-import Image from "next/image";
+
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Navbar from "./components/Navbar";
+import WorkoutCard from "./components/WorkoutCard";
 
 export default function Home() {
+  const router = useRouter();
+  const [workouts, setWorkouts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    async function loadWorkouts() {
+      try {
+        const response = await fetch(
+          "https://api.abcz.workers.dev/api/fitlog"
+        );
+
+        if (!response.ok) {
+          throw new Error("Could not load workouts");
+        }
+
+        const data = await response.json();
+        const list = Array.isArray(data) ? data : data.value;
+
+        if (!Array.isArray(list)) {
+          throw new Error("Invalid workout data");
+        }
+
+        setWorkouts(list);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadWorkouts();
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen overflow-x-clip bg-[#1E1E1E] text-white">
+      <Navbar />
+
+      <section className="mx-auto mt-8 grid min-h-[448px] w-[calc(100%-32px)] max-w-[1232px] grid-cols-1 items-center gap-6 sm:mt-12 sm:w-[calc(100%-48px)] md:grid-cols-2 md:gap-0">
+        <div className="flex min-h-[260px] w-full max-w-[558px] flex-col justify-center sm:min-h-[300px] md:ml-[57px]">
+          <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-[#CCFF00] sm:mb-5 sm:text-sm">
+            WORKOUT LIBRARY
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+
+          <h1 className="max-w-[558px] text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
+            TRAIN WITH INTENT.
+            <br />
+            LOG EVERY SET.
+          </h1>
+
+          <p className="mt-4 max-w-[520px] text-sm leading-6 text-[#9CA3AF] sm:mt-5 sm:text-base sm:leading-7">
+            FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
+            into today&apos;s plan, and watch the week&apos;s work add up.
+          </p>
+
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#library"
+            className="mt-6 inline-flex min-h-[40px] w-fit items-center justify-center bg-[#CCFF00] px-5 text-sm font-bold text-black transition hover:bg-white sm:mt-7"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            BROWSE WORKOUTS →
           </a>
         </div>
-      </main>
-    </div>
+
+        <div className="flex w-full items-center justify-center md:justify-end">
+          <img
+            src="/banner.png"
+            alt="Fitness exercise illustration"
+            className="block h-auto w-full max-w-[220px] object-contain sm:max-w-[290px] md:max-w-[334px]"
+          />
+        </div>
+      </section>
+
+      <section
+        id="library"
+        className="mx-auto mt-12 w-[calc(100%-32px)] max-w-[1232px] scroll-mt-24 pb-12 sm:mt-16 sm:w-[calc(100%-48px)] sm:pb-16"
+      >
+        <h2 className="text-2xl font-bold">THE LIBRARY</h2>
+
+        <p className="mt-2 text-sm leading-6 text-[#9CA3AF]">
+          Twelve lifts covering every major muscle group.
+        </p>
+
+        {loading && (
+          <p className="py-12 text-center text-[#9CA3AF]">
+            Loading workouts...
+          </p>
+        )}
+
+        {error && (
+          <p className="py-12 text-center text-red-400">
+            Could not load workouts. Please refresh the page.
+          </p>
+        )}
+
+        {!loading && !error && (
+          <div className="mt-6 grid grid-cols-1 gap-5 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3">
+            {workouts.map((workout) => (
+              <WorkoutCard
+                key={workout.id}
+                workout={workout}
+                onClick={() => router.push(`/workout/${workout.id}`)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    </main>
   );
 }
