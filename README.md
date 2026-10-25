@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+# B14-A6-Fit Log
+
+FitLog is a responsive workout library and gym companion that helps users explore exercises, view workout details, build a daily workout plan, and save workouts for later.
+
+## Live Demo
+
+Add your deployed website URL here after deployment.
+
+## Project Description
+
+FitLog provides a simple and modern interface for discovering workouts and managing a personal exercise plan. Users can browse workout information, view exercise instructions, sort their plan, and track completed workouts.
+
+## Technologies Used
+
+- Next.js
+- React
+- JavaScript
+- Tailwind CSS
+- Next.js App Router
+- Context API
+- Browser Local Storage
+- FitLog Workout API
+
+## Key Features
+
+1. **Responsive Design:** Layout adapts to mobile, tablet, and desktop screens.
+2. **Workout Library:** Browse workouts with exercise information and key statistics.
+3. **Workout Details:** View exercise details, equipment, difficulty, sets, reps, and instructions.
+4. **Today's Plan:** Add workouts to a daily plan and manage the selected exercises.
+5. **Save for Later:** Save workouts for quick access later.
+6. **Workout Tracking:** Mark workouts as completed or remove them from the plan.
+7. **Sorting:** Sort workouts by duration, calories, or rating.
+8. **Notifications:** Receive feedback when performing workout actions.
+9. **Persistent Data:** Plan and saved workouts are stored in browser Local Storage.
+10. **Navigation:** Navigate between the workout library, workout details, and My Plan pages.
+
+## API
+
+The project uses the FitLog workout API.
+
+- Workout list: https://api.abcz.workers.dev/api/fitlog
+- Workout details: https://api.abcz.workers.dev/api/fitlog/:id
+
+Alternative API host:
+https://api.api-store.workers.dev/api/fitlog
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js
+- npm
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+Open the project directory:
+
+```bash
+cd fitlog
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To create a production build:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+To start the production server after building:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Routes
 
-## Deploy on Vercel
+- `/` — Workout library and home page
+- `/workout/[id]` — Workout details
+- `/my-plan` — Today's Plan and saved workouts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This Next.js application can be deployed using Vercel.
+
+Add the final deployed website URL to the Live Demo section after deployment.
+
+## License
+
+This project was created as part of a programming course assignment.
